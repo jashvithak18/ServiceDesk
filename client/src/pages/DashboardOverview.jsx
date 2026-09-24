@@ -43,29 +43,32 @@ const AdminDashboard = ({ analyticsData, user }) => {
   return (
     <div className="space-y-8 font-sans">
       {/* Hero Greeting */}
-      <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-xl relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="gradient-brand text-white rounded-2xl p-6 sm:p-8 shadow-lg shadow-brand/20 relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6">
+        {/* subtle pattern overlay */}
+        <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml,%3Csvg width%3D%2230%22 height%3D%2230%22 viewBox%3D%220 0 30 30%22 xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Ccircle cx%3D%221%22 cy%3D%221%22 r%3D%221%22 fill%3D%22%23fff%22 fill-opacity%3D%220.4%22%2F%3E%3C%2Fsvg%3E')] pointer-events-none" />
         <div className="space-y-2 z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-sky-300">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 text-xs font-semibold text-white/90 backdrop-blur-sm">
+            <ShieldCheck className="w-3.5 h-3.5 text-white/80" />
             <span>System Administrator Operations Desk</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-serif font-bold tracking-tight">
             Good morning, {user?.name || 'Admin'}.
           </h1>
-          <p className="text-xs sm:text-sm text-slate-300 max-w-xl">
+          <p className="text-xs sm:text-sm text-white/75 max-w-xl">
             Here's what's happening across your service operations, hardware assets, and SLA compliance.
           </p>
         </div>
         <div className="z-10 flex items-center gap-3">
           <Link
             to="/tickets/new"
-            className="inline-flex items-center gap-2 px-4 py-2.5 bg-brand text-white font-bold text-xs rounded-xl hover:bg-brand-hover transition-colors shadow-lg shadow-brand/20"
+            className="inline-flex items-center gap-2 px-4 py-2.5 bg-white text-brand font-bold text-xs rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition-all"
           >
             <Plus className="w-4 h-4" />
             <span>Create New Ticket</span>
           </Link>
         </div>
       </div>
+
 
       {/* Top Rich Metric Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -207,13 +210,14 @@ const ItManagerDashboard = ({ analyticsData }) => {
   
   return (
     <div className="space-y-8 font-sans">
-      <div className="bg-gradient-to-r from-indigo-900 via-indigo-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-xl space-y-2">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-indigo-200">
-          <Briefcase className="w-3.5 h-3.5 text-indigo-400" />
+      <div className="bg-gradient-to-r from-stone-900 via-stone-800 to-stone-900 text-white rounded-2xl p-6 sm:p-8 shadow-xl space-y-2 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20 bg-gradient-to-br from-amber/30 to-transparent pointer-events-none" />
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-amber/90">
+          <Briefcase className="w-3.5 h-3.5 text-amber" />
           <span>IT Manager Service Control</span>
         </div>
         <h1 className="text-2xl sm:text-3xl font-serif font-bold tracking-tight">Your team's service pulse.</h1>
-        <p className="text-xs sm:text-sm text-indigo-200 max-w-xl">
+        <p className="text-xs sm:text-sm text-stone-300 max-w-xl">
           Monitor technician workload capacity, unassigned ticket bottlenecks, and SLA deadline risks.
         </p>
       </div>
@@ -290,7 +294,7 @@ const TechnicianDashboard = ({ user }) => {
         </div>
         <Link
           to="/tickets/queue"
-          className="inline-flex items-center gap-2 px-4 py-2.5 bg-amber-500 text-slate-950 font-bold text-xs rounded-xl hover:bg-amber-400 transition-colors shadow-lg"
+          className="inline-flex items-center gap-2 px-4 py-2.5 bg-white text-amber font-bold text-xs rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition-all"
         >
           <span>View My Active Queue</span>
           <ArrowRight className="w-4 h-4" />
@@ -364,9 +368,10 @@ const EmployeeDashboard = ({ user }) => {
   return (
     <div className="space-y-8 font-sans max-w-4xl mx-auto">
       {/* Friendly Customer Support Hero Banner */}
-      <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white rounded-3xl p-8 sm:p-12 shadow-xl text-center space-y-6">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 text-xs font-bold text-sky-200">
-          <Sparkles className="w-4 h-4 text-sky-300" />
+      <div className="bg-gradient-to-br from-stone-900 via-teal/80 to-stone-900 text-white rounded-3xl p-8 sm:p-12 shadow-xl text-center space-y-6 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10 bg-gradient-to-t from-teal-light to-transparent pointer-events-none" />
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 text-xs font-bold text-white/90">
+          <Sparkles className="w-4 h-4 text-amber" />
           <span>Self-Service Support Portal</span>
         </div>
 
@@ -376,26 +381,26 @@ const EmployeeDashboard = ({ user }) => {
 
         {/* Customer Search Box */}
         <div className="max-w-xl mx-auto relative">
-          <Search className="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
+          <Search className="w-5 h-5 text-stone-400 absolute left-4 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             onFocus={() => navigate('/kb')}
             placeholder="Describe your issue or search help articles (e.g., VPN, Password reset, HDMI)..."
-            className="w-full pl-12 pr-4 py-3.5 bg-white text-text-main placeholder:text-slate-400 text-xs sm:text-sm rounded-2xl border border-white/20 shadow-lg focus:outline-none focus:ring-2 focus:ring-brand"
+            className="w-full pl-12 pr-4 py-3.5 bg-white text-text-main placeholder:text-stone-400 text-xs sm:text-sm rounded-2xl border border-white/20 shadow-lg focus:outline-none focus:ring-2 focus:ring-brand"
           />
         </div>
 
         <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
           <Link
             to="/tickets/new"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-brand text-white font-bold text-xs rounded-xl hover:bg-brand-hover shadow-lg shadow-brand/20 transition-colors"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 gradient-brand text-white font-bold text-xs rounded-xl hover:opacity-90 shadow-glow-brand transition-all"
           >
             <Plus className="w-4 h-4" />
             <span>Create Support Request</span>
           </Link>
           <Link
             to="/kb"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-white/10 text-white font-semibold text-xs rounded-xl hover:bg-white/20 transition-colors border border-white/15"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-white/15 text-white font-semibold text-xs rounded-xl hover:bg-white/25 transition-colors border border-white/20 backdrop-blur-sm"
           >
             <BookOpen className="w-4 h-4" />
             <span>Browse Knowledge Base</span>
@@ -414,20 +419,20 @@ const EmployeeDashboard = ({ user }) => {
             <p className="text-xs font-bold text-blue-950">Submitted</p>
             <p className="text-[11px] text-blue-700">Ticket created in portal</p>
           </div>
-          <div className="p-3.5 rounded-xl bg-indigo-50 border border-indigo-100 space-y-1">
-            <span className="text-[10px] font-extrabold text-indigo-700 uppercase">Step 2</span>
-            <p className="text-xs font-bold text-indigo-950">Assigned</p>
-            <p className="text-[11px] text-indigo-700">Matched with technician</p>
+          <div className="p-3.5 rounded-xl bg-brand-light border border-brand-border space-y-1">
+            <span className="text-[10px] font-extrabold text-brand uppercase">Step 2</span>
+            <p className="text-xs font-bold text-text-main">Assigned</p>
+            <p className="text-[11px] text-brand/70">Matched with technician</p>
           </div>
-          <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-100 space-y-1">
-            <span className="text-[10px] font-extrabold text-amber-700 uppercase">Step 3</span>
-            <p className="text-xs font-bold text-amber-950">In Progress</p>
-            <p className="text-[11px] text-amber-700">Technician working on fix</p>
+          <div className="p-3.5 rounded-xl bg-amber-light border border-amber-border space-y-1">
+            <span className="text-[10px] font-extrabold text-amber uppercase">Step 3</span>
+            <p className="text-xs font-bold text-text-main">In Progress</p>
+            <p className="text-[11px] text-amber/70">Technician working on fix</p>
           </div>
-          <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-100 space-y-1">
-            <span className="text-[10px] font-extrabold text-emerald-700 uppercase">Step 4</span>
-            <p className="text-xs font-bold text-emerald-950">Resolved</p>
-            <p className="text-[11px] text-emerald-700">Issue verified & complete</p>
+          <div className="p-3.5 rounded-xl bg-teal-light border border-teal-border space-y-1">
+            <span className="text-[10px] font-extrabold text-teal uppercase">Step 4</span>
+            <p className="text-xs font-bold text-text-main">Resolved</p>
+            <p className="text-[11px] text-teal/70">Issue verified &amp; complete</p>
           </div>
         </div>
       </div>
@@ -454,21 +459,19 @@ const AssetManagerDashboard = () => {
 
   return (
     <div className="space-y-8 font-sans">
-      <div className="bg-gradient-to-r from-emerald-900 via-emerald-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-emerald-200">
-            <HardDrive className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Hardware Asset & Infrastructure Console</span>
+      <div className="gradient-teal text-white rounded-2xl p-6 sm:p-8 shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10 bg-gradient-to-br from-white/20 to-transparent pointer-events-none" />
+        <div className="space-y-2 z-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 text-xs font-semibold text-white/90">
+            <HardDrive className="w-3.5 h-3.5 text-white/80" />
+            <span>Hardware Asset &amp; Infrastructure Console</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-serif font-bold tracking-tight">Keep your assets under control.</h1>
-          <p className="text-xs sm:text-sm text-emerald-100 max-w-xl">
+          <p className="text-xs sm:text-sm text-white/75 max-w-xl">
             Track hardware lifecycle states, vendor warranties, and employee device assignments.
           </p>
         </div>
-        <Link
-          to="/assets"
-          className="inline-flex items-center gap-2 px-4 py-2.5 bg-emerald-500 text-slate-950 font-bold text-xs rounded-xl hover:bg-emerald-400 transition-colors shadow-lg"
-        >
+        <Link to="/assets" className="inline-flex items-center gap-2 px-4 py-2.5 bg-white text-teal font-bold text-xs rounded-xl hover:shadow-lg transition-all z-10">
           <span>Manage Asset Inventory</span>
           <ArrowRight className="w-4 h-4" />
         </Link>
