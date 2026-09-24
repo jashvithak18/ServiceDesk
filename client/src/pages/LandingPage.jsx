@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Ticket, ShieldCheck, HardDrive, Users, Sparkles, ArrowRight,
   CheckCircle2, Clock, Zap, BarChart3, BookOpen, ChevronRight,
@@ -125,11 +125,6 @@ export const LandingPage = () => {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0);
-  const heroRef   = useRef(null);
-
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
-  const heroY     = useTransform(scrollYProgress, [0, 1], ['0%', '25%']);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   return (
     <div className="min-h-screen gradient-canvas font-sans">
@@ -184,12 +179,64 @@ export const LandingPage = () => {
 
       {/* ── HERO ───────────────────────────────────────────────────────── */}
       <section ref={heroRef} className="relative pt-16 pb-24 lg:pt-24 lg:pb-32 overflow-hidden">
-        {/* Parallax blobs */}
-        <motion.div style={{ y: heroY }} className="absolute inset-0 pointer-events-none -z-10">
-          <div className="absolute top-[-10%] left-[10%] w-[500px] h-[500px] rounded-full bg-gradient-to-br from-brand/12 via-amber/8 to-transparent blur-3xl" />
-          <div className="absolute top-[20%] right-[5%]  w-[380px] h-[380px] rounded-full bg-gradient-to-br from-teal/10 to-transparent blur-3xl" />
-          <div className="absolute bottom-0 left-[30%] w-[300px] h-[300px] rounded-full bg-gradient-to-t from-amber/8 to-transparent blur-2xl" />
-        </motion.div>
+        {/* ── Animated Orb Field ──────────────────────────────────────── */}
+        <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
+          {/* Dot-grid texture */}
+          <div
+            className="absolute inset-0 opacity-[0.035]"
+            style={{
+              backgroundImage: 'radial-gradient(circle, #1A1814 1px, transparent 1px)',
+              backgroundSize: '28px 28px',
+            }}
+          />
+          {/* Large background halo — brand */}
+          <motion.div
+            animate={{ scale: [1, 1.08, 1], opacity: [0.18, 0.26, 0.18] }}
+            transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute -top-32 -left-20 w-[640px] h-[640px] rounded-full"
+            style={{ background: 'radial-gradient(circle, rgba(193,69,93,0.22) 0%, transparent 70%)' }}
+          />
+          {/* Mid orb — teal */}
+          <motion.div
+            animate={{ scale: [1, 1.12, 1], opacity: [0.14, 0.22, 0.14], x: [0, 30, 0] }}
+            transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+            className="absolute top-[30%] right-[-80px] w-[480px] h-[480px] rounded-full"
+            style={{ background: 'radial-gradient(circle, rgba(30,107,94,0.18) 0%, transparent 70%)' }}
+          />
+          {/* Small orb — amber accent */}
+          <motion.div
+            animate={{ scale: [1, 1.2, 1], opacity: [0.12, 0.2, 0.12], y: [0, -20, 0] }}
+            transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 4 }}
+            className="absolute bottom-10 left-[35%] w-[280px] h-[280px] rounded-full"
+            style={{ background: 'radial-gradient(circle, rgba(212,134,60,0.20) 0%, transparent 70%)' }}
+          />
+          {/* Floating sparkle dots */}
+          {[
+            { x: '15%',  y: '20%', size: 6,  delay: 0,   dur: 6,  color: '#C1455D', opacity: 0.5 },
+            { x: '80%',  y: '15%', size: 4,  delay: 1.5, dur: 8,  color: '#1E6B5E', opacity: 0.4 },
+            { x: '90%',  y: '60%', size: 5,  delay: 3,   dur: 7,  color: '#D4863C', opacity: 0.45 },
+            { x: '25%',  y: '75%', size: 3,  delay: 0.8, dur: 9,  color: '#C1455D', opacity: 0.35 },
+            { x: '60%',  y: '85%', size: 4,  delay: 2,   dur: 6,  color: '#1E6B5E', opacity: 0.4 },
+            { x: '50%',  y: '10%', size: 5,  delay: 4,   dur: 10, color: '#D4863C', opacity: 0.3 },
+            { x: '70%',  y: '40%', size: 3,  delay: 1,   dur: 7,  color: '#C1455D', opacity: 0.25 },
+            { x: '8%',   y: '55%', size: 4,  delay: 5,   dur: 8,  color: '#1E6B5E', opacity: 0.3 },
+          ].map(({ x, y, size, delay, dur, color, opacity }, i) => (
+            <motion.div
+              key={i}
+              animate={{ y: [0, -14, 0], opacity: [opacity, opacity * 1.6, opacity] }}
+              transition={{ duration: dur, repeat: Infinity, ease: 'easeInOut', delay }}
+              className="absolute rounded-full"
+              style={{ left: x, top: y, width: size, height: size, background: color }}
+            />
+          ))}
+          {/* Thin horizontal accent line */}
+          <motion.div
+            animate={{ scaleX: [0.4, 1, 0.4], opacity: [0, 0.12, 0] }}
+            transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
+            className="absolute top-[38%] left-0 right-0 h-px origin-left"
+            style={{ background: 'linear-gradient(90deg, transparent, rgba(193,69,93,0.3), transparent)' }}
+          />
+        </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -212,7 +259,7 @@ export const LandingPage = () => {
               >
                 IT support,{' '}
                 <br className="hidden sm:inline" />
-                <span className="gradient-brand-text">without the chaos.</span>
+                <span className="text-brand">without the chaos.</span>
               </motion.h1>
 
               <motion.p
@@ -373,7 +420,7 @@ export const LandingPage = () => {
             {STATS.map(({ label, value, suffix, icon: Icon }, i) => (
               <Reveal key={label} delay={i * 0.08}>
                 <div className="text-center space-y-1">
-                  <div className="text-3xl font-serif font-bold gradient-brand-text">
+                  <div className="text-3xl font-serif font-bold text-brand">
                     <Counter target={value} suffix={suffix} />
                   </div>
                   <div className="text-xs text-text-muted font-medium">{label}</div>
@@ -400,7 +447,7 @@ export const LandingPage = () => {
             <Reveal delay={0.1}>
               <h2 className="text-3xl sm:text-4xl font-serif font-bold text-text-main tracking-tight mt-3">
                 From request to resolved.<br />
-                <span className="gradient-brand-text">Every step, visible.</span>
+                <span className="text-brand">Every step, visible.</span>
               </h2>
             </Reveal>
             <Reveal delay={0.2}>
@@ -540,7 +587,7 @@ export const LandingPage = () => {
             <Reveal delay={0.1}>
               <h2 className="text-3xl sm:text-4xl font-serif font-bold text-text-main tracking-tight mt-3">
                 Every person sees{' '}
-                <span className="gradient-brand-text">exactly what they need.</span>
+                <span className="text-teal">exactly what they need.</span>
               </h2>
             </Reveal>
           </div>
