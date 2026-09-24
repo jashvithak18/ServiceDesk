@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-base: #FAF9F6;
+    --bg-surface: #FFFFFF;
+    --border-color: #E8E5DE;
+    --text-main: #22201C;
+    --text-muted: #6B6559;
+    --brand-primary: #B5502F;
+  }
+
+  body {
+    background-color: var(--bg-base);
+    color: var(--text-main);
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, .font-serif-heading {
+    font-family: 'Source Serif 4', Georgia, serif;
+    letter-spacing: -0.015em;
+  }
+}
+
+/* Custom Scrollbar for dense operations UI */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAF9F6;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D5CEC2;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B8B0A2;
+}
+
+/* Custom Status Pill Classes */
+.status-pill {
+  @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border;
+}
+
+.status-open {
+  @apply bg-[#F0F4F8] text-[#3E5C76] border-[#D0DDE8];
+}
+
+.status-in-progress {
+  @apply bg-[#FAF5EB] text-[#B5822F] border-[#EDE0C4];
+}
+
+.status-resolved {
+  @apply bg-[#F1F7F3] text-[#3D6B4F] border-[#C8E0D2];
+}
+
+.status-breached {
+  @apply bg-[#FDF2F0] text-[#9C3B2E] border-[#F2C9C4];
+}
+
+.status-on-hold {
+  @apply bg-[#F4F3F0] text-[#6B6559] border-[#DDD9D0];
+}
