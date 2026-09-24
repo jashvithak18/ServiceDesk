@@ -111,8 +111,6 @@ export const LandingPage = () => {
           <div className="hidden md:flex items-center gap-8 text-xs font-semibold text-text-muted">
             <a href="#features" className="hover:text-brand transition-colors">Features</a>
             <a href="#lifecycle" className="hover:text-brand transition-colors">Ticket Lifecycle</a>
-            <a href="#solutions" className="hover:text-brand transition-colors">Role Workspaces</a>
-            <a href="#architecture" className="hover:text-brand transition-colors">Enterprise SLA</a>
           </div>
 
           <div className="flex items-center gap-3">
