@@ -35,8 +35,8 @@ app.use('/api/kb', kbRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/notifications', notificationRoutes);
 
-// Health Check Route
-app.get('/api/health', (req, res) => {
+// Health Check Routes (Root & API Health for Render & Cloud Monitors)
+const getHealthStatus = (req, res) => {
   const dbState = mongoose.connection.readyState;
   const states = { 0: 'Disconnected', 1: 'Connected', 2: 'Connecting', 3: 'Disconnecting' };
   
@@ -49,7 +49,10 @@ app.get('/api/health', (req, res) => {
       connected: dbState === 1,
     },
   });
-});
+};
+
+app.get('/', getHealthStatus);
+app.get('/api/health', getHealthStatus);
 
 // 404 Route Handler
 app.use((req, res, next) => {
