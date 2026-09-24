@@ -15,9 +15,24 @@ import notificationRoutes from './routes/notificationRoutes.js';
 
 const app = express();
 
-// Middlewares
+// Dynamic CORS origin configuration to support Vercel preview & production deployments
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  'https://service-desk-ashy.vercel.app',
+  'https://servicedesk-client.vercel.app',
+  'http://localhost:5173',
+  'http://localhost:5174',
+].filter(Boolean);
+
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  origin: (origin, callback) => {
+    // Allow server-to-server, mobile apps, or requests without origin header
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+      return callback(null, true);
+    }
+    return callback(new Error(`CORS policy error: Origin ${origin} not allowed`));
+  },
   credentials: true,
 }));
 app.use(morgan('dev'));
