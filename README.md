@@ -1,5 +1,7 @@
 # ServiceDesk Pro — Full-Stack IT Helpdesk & Asset Management Platform
 
+**Live Backend API**: `https://servicedesk-lrjr.onrender.com`
+
 ServiceDesk Pro is an enterprise IT Helpdesk, SLA Governance, and Hardware Asset Lifecycle Management platform built with the MERN Stack (MongoDB, Express.js, React, Node.js), styled with a modern **calm operations editorial design system** (warm off-white `#FAF9F6`, terracotta `#B5502F`, slate blue `#3E5C76`, Google Fonts *Source Serif 4* & *Inter*).
 
 ---
