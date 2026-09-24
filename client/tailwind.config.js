@@ -7,33 +7,41 @@ export default {
   theme: {
     extend: {
       colors: {
-        base: "#FAF9F6",       // Warm off-white background
+        base: "#FAF9F6",       // Warm off-white canvas
         surface: "#FFFFFF",    // Clean card surface
+        surfaceSubtle: "#F8FAFC", // Light tinted surface
         border: {
-          DEFAULT: "#E8E5DE",  // Subtle warm gray border
-          subtle: "#F0ECE1",
+          DEFAULT: "#E2E8F0",  // Soft slate border
+          subtle: "#F1F5F9",
+          brand: "#FDBA74",
         },
         text: {
-          main: "#22201C",     // Warm charcoal primary text
-          muted: "#6B6559",    // Muted secondary text
-          light: "#8F897C",
+          main: "#0F172A",     // Slate-900 primary text
+          muted: "#64748B",    // Slate-500 secondary text
+          light: "#94A3B8",
         },
         brand: {
-          DEFAULT: "#B5502F",  // Deep terracotta primary accent
-          hover: "#9C4224",
-          light: "#FDF5F2",
-          border: "#E9BFB1",
+          DEFAULT: "#4F46E5",  // Premium Indigo primary accent
+          hover: "#4338CA",
+          light: "#EEF2FF",
+          border: "#C7D2FE",
+          terracotta: "#B5502F",
         },
         accent: {
-          DEFAULT: "#3E5C76",  // Muted slate blue secondary accent
-          light: "#F0F4F8",
+          DEFAULT: "#0EA5E9",  // Sky blue secondary accent
+          teal: "#0D9488",
+          violet: "#8B5CF6",
+          amber: "#D97706",
+          emerald: "#059669",
+          rose: "#E11D48",
+          light: "#F0F9FF",
         },
         status: {
-          open: "#3E5C76",     // Muted blue
-          inProgress: "#B5822F", // Muted amber
-          resolved: "#3D6B4F", // Muted green
-          breached: "#9C3B2E", // Muted brick red
-          onHold: "#6B6559",   // Muted gray
+          open: "#2563EB",     // Vivid blue
+          inProgress: "#D97706", // Warm amber
+          resolved: "#059669", // Emerald green
+          breached: "#DC2626", // Brick red
+          onHold: "#64748B",   // Muted slate
         },
       },
       fontFamily: {
@@ -41,27 +49,21 @@ export default {
         sans: ['"Inter"', 'system-ui', '-apple-system', 'sans-serif'],
       },
       borderRadius: {
-        DEFAULT: '6px',
-        sm: '4px',
-        md: '6px',
-        lg: '8px',
-        xl: '12px',
+        DEFAULT: '8px',
+        sm: '6px',
+        md: '8px',
+        lg: '12px',
+        xl: '16px',
+        '2xl': '24px',
         full: '9999px',
       },
-      fontSize: {
-        '2xs': ['11px', '14px'],
-        'xs': ['12px', '16px'],
-        'sm': ['14px', '20px'],
-        'base': ['15px', '22px'],
-        'lg': ['18px', '26px'],
-        'xl': ['20px', '28px'],
-        '2xl': ['24px', '32px'],
-        '3xl': ['30px', '38px'],
-      },
       boxShadow: {
-        'subtle': '0 1px 2px 0 rgba(34, 32, 28, 0.04)',
-        'sm': '0 1px 3px 0 rgba(34, 32, 28, 0.06), 0 1px 2px 0 rgba(34, 32, 28, 0.03)',
-        'md': '0 4px 6px -1px rgba(34, 32, 28, 0.07), 0 2px 4px -1px rgba(34, 32, 28, 0.04)',
+        'subtle': '0 1px 3px 0 rgba(15, 23, 42, 0.03)',
+        'sm': '0 1px 2px 0 rgba(15, 23, 42, 0.05)',
+        'md': '0 4px 6px -1px rgba(15, 23, 42, 0.06), 0 2px 4px -2px rgba(15, 23, 42, 0.04)',
+        'lg': '0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.03)',
+        'xl': '0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.04)',
+        'glow': '0 0 20px -5px rgba(79, 70, 229, 0.25)',
       },
     },
   },

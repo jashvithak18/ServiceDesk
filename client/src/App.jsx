@@ -1,9 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { AppLayout } from './components/layout/AppLayout';
+import { LandingPage } from './pages/LandingPage';
 import { DashboardOverview } from './pages/DashboardOverview';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
@@ -40,46 +41,52 @@ const queryClient = new QueryClient({
   },
 });
 
+// Helper component for Landing Page vs App Dashboard routing
+function PublicRootOrApp() {
+  const { isAuthenticated } = useAuth();
+  return <LandingPage />;
+}
+
 export function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <Routes>
-            {/* Public Auth Routes */}
+            {/* Public Landing & Auth Routes */}
+            <Route path="/" element={<PublicRootOrApp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 
-            {/* Protected App Routes */}
+            {/* Protected App Layout Routes */}
             <Route
-              path="/"
               element={
                 <ProtectedRoute>
                   <AppLayout />
                 </ProtectedRoute>
               }
             >
-              <Route index element={<DashboardOverview />} />
+              <Route path="/app" element={<DashboardOverview />} />
 
               {/* Ticket Lifecycle Routes */}
-              <Route path="tickets" element={<TicketsListPage />} />
-              <Route path="tickets/queue" element={<TicketsListPage />} />
-              <Route path="tickets/new" element={<CreateTicketPage />} />
-              <Route path="tickets/:id" element={<TicketDetailPage />} />
+              <Route path="/tickets" element={<TicketsListPage />} />
+              <Route path="/tickets/queue" element={<TicketsListPage />} />
+              <Route path="/tickets/new" element={<CreateTicketPage />} />
+              <Route path="/tickets/:id" element={<TicketDetailPage />} />
 
               {/* Asset Management Routes */}
-              <Route path="assets" element={<AssetsListPage />} />
-              <Route path="inventory/assets" element={<AssetsListPage />} />
-              <Route path="inventory/assets/:id" element={<AssetDetailPage />} />
-              <Route path="inventory/vendors" element={<VendorsPage />} />
+              <Route path="/assets" element={<AssetsListPage />} />
+              <Route path="/inventory/assets" element={<AssetsListPage />} />
+              <Route path="/inventory/assets/:id" element={<AssetDetailPage />} />
+              <Route path="/inventory/vendors" element={<VendorsPage />} />
 
               {/* Knowledge Base Routes */}
-              <Route path="kb" element={<KnowledgeBasePage />} />
-              <Route path="kb/:id" element={<ArticleDetailPage />} />
+              <Route path="/kb" element={<KnowledgeBasePage />} />
+              <Route path="/kb/:id" element={<ArticleDetailPage />} />
 
               {/* Admin & IT Manager Governance Routes */}
               <Route
-                path="admin/sla"
+                path="/admin/sla"
                 element={
                   <ProtectedRoute allowedRoles={['admin', 'it_manager']}>
                     <SlaPerformanceDashboard />
@@ -87,7 +94,7 @@ export function App() {
                 }
               />
               <Route
-                path="admin/workload"
+                path="/admin/workload"
                 element={
                   <ProtectedRoute allowedRoles={['admin', 'it_manager']}>
                     <TechnicianWorkloadPage />
@@ -95,7 +102,7 @@ export function App() {
                 }
               />
               <Route
-                path="admin/audit-logs"
+                path="/admin/audit-logs"
                 element={
                   <ProtectedRoute allowedRoles={['admin', 'it_manager']}>
                     <AuditLogPage />
@@ -103,7 +110,7 @@ export function App() {
                 }
               />
               <Route
-                path="admin/departments"
+                path="/admin/departments"
                 element={
                   <ProtectedRoute allowedRoles={['admin', 'it_manager']}>
                     <DepartmentsPage />
@@ -111,7 +118,7 @@ export function App() {
                 }
               />
               <Route
-                path="admin/categories"
+                path="/admin/categories"
                 element={
                   <ProtectedRoute allowedRoles={['admin', 'it_manager']}>
                     <CategoriesPage />
@@ -119,7 +126,7 @@ export function App() {
                 }
               />
               <Route
-                path="admin/sla-policies"
+                path="/admin/sla-policies"
                 element={
                   <ProtectedRoute allowedRoles={['admin', 'it_manager']}>
                     <SLAPoliciesPage />
@@ -127,7 +134,7 @@ export function App() {
                 }
               />
               <Route
-                path="admin/users"
+                path="/admin/users"
                 element={
                   <ProtectedRoute allowedRoles={['admin', 'it_manager']}>
                     <UserDirectoryPage />
@@ -135,8 +142,8 @@ export function App() {
                 }
               />
 
-              {/* Catch-all fallback */}
-              <Route path="*" element={<Navigate to="/" replace />} />
+              {/* Catch-all fallback inside layout */}
+              <Route path="*" element={<Navigate to="/app" replace />} />
             </Route>
           </Routes>
         </BrowserRouter>
