@@ -178,7 +178,7 @@ export const LandingPage = () => {
       </header>
 
       {/* ── HERO ───────────────────────────────────────────────────────── */}
-      <section ref={heroRef} className="relative pt-16 pb-24 lg:pt-24 lg:pb-32 overflow-hidden">
+      <section className="relative pt-16 pb-24 lg:pt-24 lg:pb-32 overflow-hidden">
         {/* ── Animated Orb Field ──────────────────────────────────────── */}
         <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
           {/* Dot-grid texture */}
