@@ -7,17 +7,34 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Silent refresh on app initial load
+  // Silent refresh on app initial load (only when a prior session existed)
   useEffect(() => {
     const checkAuthStatus = async () => {
+      const storedRefreshToken = localStorage.getItem('refreshToken');
+      const hasSession = localStorage.getItem('hasSession');
+
+      // If user is an unauthenticated visitor, skip refresh to prevent console 401
+      if (!storedRefreshToken && !hasSession) {
+        setUser(null);
+        setAccessToken(null);
+        setLoading(false);
+        return;
+      }
+
       try {
-        const res = await API.post('/auth/refresh');
+        const res = await API.post('/auth/refresh', { refreshToken: storedRefreshToken });
         if (res.data.success) {
           setAccessToken(res.data.accessToken);
+          if (res.data.refreshToken) {
+            localStorage.setItem('refreshToken', res.data.refreshToken);
+          }
+          localStorage.setItem('hasSession', 'true');
           setUser(res.data.user);
         }
       } catch (err) {
         // No active session cookie or expired session
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('hasSession');
         setUser(null);
         setAccessToken(null);
       } finally {
@@ -34,6 +51,10 @@ export const AuthProvider = ({ children }) => {
       const res = await API.post('/auth/login', { email, password });
       if (res.data.success) {
         setAccessToken(res.data.accessToken);
+        if (res.data.refreshToken) {
+          localStorage.setItem('refreshToken', res.data.refreshToken);
+        }
+        localStorage.setItem('hasSession', 'true');
         setUser(res.data.user);
         return { success: true, user: res.data.user };
       }
@@ -51,6 +72,10 @@ export const AuthProvider = ({ children }) => {
       const res = await API.post('/auth/register', userData);
       if (res.data.success) {
         setAccessToken(res.data.accessToken);
+        if (res.data.refreshToken) {
+          localStorage.setItem('refreshToken', res.data.refreshToken);
+        }
+        localStorage.setItem('hasSession', 'true');
         setUser(res.data.user);
         return { success: true, user: res.data.user };
       }
@@ -64,10 +89,13 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await API.post('/auth/logout');
+      const storedRefreshToken = localStorage.getItem('refreshToken');
+      await API.post('/auth/logout', { refreshToken: storedRefreshToken });
     } catch (err) {
       console.error('Logout error:', err);
     } finally {
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('hasSession');
       setAccessToken(null);
       setUser(null);
     }

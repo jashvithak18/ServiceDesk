@@ -42,7 +42,7 @@ export const registerUser = async (req, res, next) => {
     });
 
     const accessToken = generateAccessToken(user._id, user.role);
-    generateRefreshToken(res, user._id);
+    const refreshToken = generateRefreshToken(res, user._id);
 
     res.status(201).json({
       success: true,
@@ -56,6 +56,7 @@ export const registerUser = async (req, res, next) => {
         createdAt: user.createdAt,
       },
       accessToken,
+      refreshToken,
     });
   } catch (error) {
     next(error);
@@ -86,7 +87,7 @@ export const loginUser = async (req, res, next) => {
     }
 
     const accessToken = generateAccessToken(user._id, user.role);
-    generateRefreshToken(res, user._id);
+    const refreshToken = generateRefreshToken(res, user._id);
 
     res.status(200).json({
       success: true,
@@ -100,26 +101,27 @@ export const loginUser = async (req, res, next) => {
         createdAt: user.createdAt,
       },
       accessToken,
+      refreshToken,
     });
   } catch (error) {
     next(error);
   }
 };
 
-// @desc    Refresh access token using httpOnly cookie
+// @desc    Refresh access token using httpOnly cookie or request body
 // @route   POST /api/auth/refresh
 // @access  Public
 export const refreshToken = async (req, res, next) => {
   try {
-    const refreshTokenCookie = req.cookies?.refreshToken;
+    const token = req.cookies?.refreshToken || req.body?.refreshToken;
 
-    if (!refreshTokenCookie) {
+    if (!token) {
       res.status(401);
-      throw new Error('Refresh token not found in cookies');
+      throw new Error('Refresh token not found');
     }
 
     const decoded = jwt.verify(
-      refreshTokenCookie,
+      token,
       process.env.JWT_REFRESH_SECRET || 'servicedesk_jwt_refresh_secret_key_2026'
     );
 
@@ -134,6 +136,7 @@ export const refreshToken = async (req, res, next) => {
     res.status(200).json({
       success: true,
       accessToken: newAccessToken,
+      refreshToken: token,
       user: {
         _id: user._id,
         name: user.name,
